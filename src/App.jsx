@@ -7,7 +7,7 @@ import DataSwitch from './components/DataSwitch';
 export default function App() {
   const [tableContents, setTableContents] = useState(null);
   const [tableIsOpen, setTableIsOpen] = useState(false);
-  const [rawOrSegment, setRawOrSegment] = useState('raw');
+  const [rawOrSegment, setRawOrSegment] = useState('segment');
   const tableDivRef = useRef(null);
   
   const scrollToElement = () => {
@@ -49,7 +49,7 @@ export default function App() {
   };
 
   const handleDataSwitchChange = (e) => {
-    setRawOrSegment(e.target.checked ? 'segment': 'raw');
+    setRawOrSegment(e.target.checked ? 'raw': 'segment');
   };
 
   return (
@@ -63,10 +63,10 @@ export default function App() {
           <>
             <div className='absolute top-3.5 left-2 z-10'>
               <DataSwitch
-                checked={rawOrSegment === 'segment'}
+                checked={rawOrSegment === 'raw'}
                 onChange={handleDataSwitchChange}
-                labelLeft='Raw'
-                labelRight='Segment'
+                labelLeft='Segment'
+                labelRight='Raw'
               />
             </div>
 

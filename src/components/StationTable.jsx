@@ -6,8 +6,26 @@ const StyledDataGrid = styled(DataGrid)(() => ({
   '& .row-belfort': { backgroundColor: 'rgba(77, 205,255, 0.4)' }
 }));
 
-const replaceMissing = (value) => {
-  return value === -99.0 ? 'M' : value;
+function roundTo(n, digits) {
+    var negative = false;
+    if (digits === undefined) {
+        digits = 0;
+    }
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+    var multiplicator = Math.pow(10, digits);
+    n = parseFloat((n * multiplicator).toFixed(11));
+    n = (Math.round(n) / multiplicator).toFixed(digits);
+    if (negative) {
+        n = (n * -1).toFixed(digits);
+    }
+    return n;
+}
+
+const formatValue = (value) => {
+  return value === -99.0 ? 'M' : roundTo(value, 2);
 };
 
 export default function StationTable({ tableContents, rawOrSegment }) {
@@ -18,7 +36,7 @@ export default function StationTable({ tableContents, rawOrSegment }) {
       headerName: 'Year',
       sortComparator: (_,__,aParams,bParams) => aParams.id.localeCompare(bParams.id)
     },
-    ...windDirections.map(wd => ({ field: wd, headerName: wd, valueFormatter: (value) => replaceMissing(value) }))
+    ...windDirections.map(wd => ({ field: wd, headerName: wd, valueFormatter: (value) => formatValue(value) }))
   ];
 
   const getRowClassName = (params) => {
