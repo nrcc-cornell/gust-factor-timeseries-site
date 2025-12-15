@@ -27,7 +27,7 @@ export default function App() {
 
     try {
       // fetch(`/station-data/${e.features[0].properties.code}.json`)
-      fetch(`/station-data/fake.json`)
+      fetch(new URL(`../station-data/fake.json`, import.meta.url).href)
         .then(response => response.json())
         .then(data => setTableContents(data));
       
