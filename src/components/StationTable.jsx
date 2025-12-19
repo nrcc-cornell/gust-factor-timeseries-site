@@ -59,14 +59,14 @@ export default function StationTable({ tableContents, rawOrSegment }) {
         },
         columns: {
           columnVisibilityModel: {
-            NNE: false,
-            ENE: false,
-            ESE: false,
-            SSE: false,
-            NNW: false,
-            ENW: false,
-            ESW: false,
-            SSW: false,
+            // NNE: false,
+            // ENE: false,
+            // ESE: false,
+            // SSE: false,
+            // NNW: false,
+            // ENW: false,
+            // ESW: false,
+            // SSW: false,
           },
         },
       }}
