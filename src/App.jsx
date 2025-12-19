@@ -24,10 +24,11 @@ export default function App() {
     let timerId2 = null;
 
     console.log('Stubbed, but should fetch: ', e.features[0].properties.code);
+    console.log(`${import.meta.env.BASE_URL}/station-data/${e.features[0].properties.code}.json`);
 
     try {
-      // fetch(`/station-data/${e.features[0].properties.code}.json`)
-      fetch(new URL(`../station-data/fake.json`, import.meta.url).href)
+      fetch(`${import.meta.env.BASE_URL}/station-data/${e.features[0].properties.code}.json`)
+      // fetch(new URL(`./station-data/${e.features[0].properties.code}.json`, import.meta.url).href)
         .then(response => response.json())
         .then(data => setTableContents(data));
       
