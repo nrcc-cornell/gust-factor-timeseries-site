@@ -30,3 +30,4 @@ dist-ssr
 !.dev.vars.example
 
 /public/station-data
+cf_project_deployment.sh
