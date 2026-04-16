@@ -1,0 +1,6 @@
+name = "gust-factor-timeseries-site"
+pages_build_output_dir = "./build"
+
+[[r2_buckets]]
+binding = "r2_bucket"
+bucket_name = "gust-factor-timeseries"
