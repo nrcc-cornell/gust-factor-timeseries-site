@@ -53,8 +53,6 @@ export default function App() {
     setRawOrSegment(e.target.checked ? 'raw': 'segment');
   };
 
-  console.log('Update through 2025 coming soon...');
-
   return (
     <div className='flex flex-col gap-5'>
       <h1>Gust Factor Timeseries</h1>
