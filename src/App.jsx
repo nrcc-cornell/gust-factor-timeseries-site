@@ -4,6 +4,8 @@ import GustMap from './components/GustMap'
 import StationTable from './components/StationTable';
 import DataSwitch from './components/DataSwitch';
 
+import fetchDataFromBucket from './utils/fetchDataFromBucket';
+
 export default function App() {
   const [tableContents, setTableContents] = useState(null);
   const [tableIsOpen, setTableIsOpen] = useState(false);
@@ -19,34 +21,45 @@ export default function App() {
     }
   };
 
-  const handleStationClick = (e) => {
-    let timerId = null;
-    let timerId2 = null;
-
-    console.log('Stubbed, but should fetch: ', e.features[0].properties.code);
-    console.log(`${import.meta.env.BASE_URL}/station-data/${e.features[0].properties.code}.json`);
-
-    try {
-      fetch(`${import.meta.env.BASE_URL}/station-data/${e.features[0].properties.code}.json`)
-      // fetch(new URL(`./station-data/${e.features[0].properties.code}.json`, import.meta.url).href)
-        .then(response => response.json())
-        .then(data => setTableContents(data));
-      
-      timerId = setTimeout(() => {
-        setTableIsOpen(true);
-      }, 2000);
-
-      timerId2 = setTimeout(() => {
-        scrollToElement();
-      }, 2100);
-    } catch {
+  const handleStationClick = async (e) => {
+    const results = await fetchDataFromBucket(`${e.features[0].properties.code}.json`);
+    if (results) {
+      setTableContents(results);
+      setTableIsOpen(true);
+      scrollToElement();
+    } else {
       setTableContents(null);
       setTableIsOpen(false);
-      return () => {
-        clearTimeout(timerId);
-        clearTimeout(timerId2);
-      }
     }
+
+
+    // let timerId = null;
+    // let timerId2 = null;
+    
+    // console.log('Stubbed, but should fetch: ', e.features[0].properties.code);
+    // console.log(`${import.meta.env.BASE_URL}/station-data/${e.features[0].properties.code}.json`);
+
+    // try {
+    //   fetch(`${import.meta.env.BASE_URL}/station-data/${e.features[0].properties.code}.json`)
+    //   // fetch(new URL(`./station-data/${e.features[0].properties.code}.json`, import.meta.url).href)
+    //     .then(response => response.json())
+    //     .then(data => setTableContents(data));
+      
+    //   timerId = setTimeout(() => {
+    //     setTableIsOpen(true);
+    //   }, 2000);
+
+    //   timerId2 = setTimeout(() => {
+    //     scrollToElement();
+    //   }, 2100);
+    // } catch {
+    //   setTableContents(null);
+    //   setTableIsOpen(false);
+    //   return () => {
+    //     clearTimeout(timerId);
+    //     clearTimeout(timerId2);
+    //   }
+    // }
   };
 
   const handleDataSwitchChange = (e) => {
