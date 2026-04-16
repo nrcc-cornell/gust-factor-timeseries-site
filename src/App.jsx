@@ -21,15 +21,28 @@ export default function App() {
     }
   };
 
-  const handleStationClick = async (e) => {
-    const results = await fetchDataFromBucket(`${e.features[0].properties.code}.json`);
-    if (results) {
-      setTableContents(results);
-      setTableIsOpen(true);
-      scrollToElement();
-    } else {
+  const handleStationClick = (e) => {
+    let timerId = null;
+    let timerId2 = null;
+    
+    try {
+      fetchDataFromBucket(`${e.features[0].properties.code}.json`)
+        .then(data => setTableContents(data));
+      
+      timerId = setTimeout(() => {
+        setTableIsOpen(true);
+      }, 2000);
+
+      timerId2 = setTimeout(() => {
+        scrollToElement();
+      }, 2100);
+    } catch {
       setTableContents(null);
       setTableIsOpen(false);
+      return () => {
+        clearTimeout(timerId);
+        clearTimeout(timerId2);
+      }
     }
   };
 
