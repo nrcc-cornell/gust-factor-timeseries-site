@@ -28,7 +28,7 @@ const formatValue = (value) => {
   return value === -99.0 ? 'M' : roundTo(value, 2);
 };
 
-export default function StationTable({ tableContents, rawOrSegment }) {
+export default function StationTable({ tableContents, rawOrSegment, station }) {
   const windDirections = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
   const columns = [
     {
@@ -54,26 +54,19 @@ export default function StationTable({ tableContents, rawOrSegment }) {
       initialState={{
         pagination: {
           paginationModel: {
-            pageSize: 10,
-          },
-        },
-        columns: {
-          columnVisibilityModel: {
-            // NNE: false,
-            // ENE: false,
-            // ESE: false,
-            // SSE: false,
-            // NNW: false,
-            // ENW: false,
-            // ESW: false,
-            // SSW: false,
+            pageSize: 100,
           },
         },
       }}
-      pageSizeOptions={[10,20,30]}
+      hideFooter
       showToolbar
       getRowId={(row) => `${row.anemometer}-${row.year}`}
       getRowClassName={getRowClassName}
+      slotProps={{
+        toolbar: {
+          csvOptions: { fileName: station ? station.name : 'Gust_Factor_Timeseries' }
+        },
+      }}
     />
   );
 }
