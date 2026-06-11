@@ -66,10 +66,12 @@ export default function App() {
         
         <main className='flex flex-col gap-5 mt-3 mb-6'>
           <div className='relative min-w-sm max-w-7xl w-4/5 mx-auto'>
-            <button
-              onClick={() => {}}
-              className='absolute right-0 top-0 border border-black px-2 py-1 hover:cursor-pointer hover:bg-gray-100'
-            >About the Data</button>
+            <a
+              className='absolute right-0 top-0 border border-black text-black! px-2 py-1 hover:cursor-pointer hover:bg-gray-100'
+              href='/JAMC_gust_factor_paper.pdf'
+              target='_blank'
+              rel='noopener noreferrer'
+            >About the Data</a>
 
             <h1 className='text-4xl!'>Annual Gust Factors</h1>
 
@@ -83,39 +85,42 @@ export default function App() {
           <div className='min-w-sm max-w-7xl w-4/5 mx-auto overflow-hidden border-2 border-gray-400 rounded-xl shadow-lg'>
             <GustMap handleStationClick={handleStationClick}/>
           </div>
-
-          <div className='min-w-sm max-w-7xl w-4/5 mx-auto'>
-            <h6 className='text-lg! font-bold'>Annual Gust Factors</h6>
-
-            <div className='px-8'>
-              <p>Gust factors are computed based on 1-minute Automated Surface Observing System wind speed observations using the equation</p>
-
-              <div className='mt-5'>
-                <math display="block">
-                  <mrow>
-                    <mi>GF</mi>
-                    <mo>=</mo>
-                    <msub>
-                      <mi>W</mi>
-                      <mn>gust</mn>
-                    </msub>
-                    <mo>/</mo>
-                    <msub>
-                      <mi>W</mi>
-                      <mn>2</mn>
-                    </msub>
-                  </mrow>
-                </math>
-              </div>
-
-              <p className='mt-5'>where <math><msub><mi>W</mi><mn>2</mn></msub></math> is a 2-minute average wind speed and <math><msub><mi>W</mi><mn>gust</mn></msub></math> is either a 3-second (green rows) or 5-second (blue rows) gust value depending on anemometer type.</p>
-
-              <p className='mt-10'><b>Segment</b> gust factors are smoothed based on statistically detected breaks in the gust factor series.</p>
-              <p><b>Raw</b> gust factors are unsmoothed annual average values based on the above equation.</p>
-            </div>
-          </div>
           
           <div ref={tableDivRef} className={tableIsOpen ? '' : ' hidden'}>
+
+            <div className='min-w-sm max-w-7xl w-4/5 mx-auto mb-7'>
+              <h6 className='text-lg! font-bold'>Annual Gust Factors</h6>
+
+              <div className='px-8'>
+                <p>Gust factors are computed based on 1-minute Automated Surface Observing System wind speed observations using the equation</p>
+
+                <div className='mt-5'>
+                  <math display="block">
+                    <mrow>
+                      <mi>GF</mi>
+                      <mo>=</mo>
+                      <msub>
+                        <mi>W</mi>
+                        <mn>gust</mn>
+                      </msub>
+                      <mo>/</mo>
+                      <msub>
+                        <mi>W</mi>
+                        <mn>2</mn>
+                      </msub>
+                    </mrow>
+                  </math>
+                </div>
+
+                <p className='mt-5'>where <math><msub><mi>W</mi><mn>2</mn></msub></math> is a 2-minute average wind speed and <math><msub><mi>W</mi><mn>gust</mn></msub></math> is either a 3-second (green rows) or 5-second (blue rows) gust value depending on anemometer type.</p>
+
+                <p className='mt-10'>Missing gust factors <b>"M"</b> occur when the number of wind observations from a particular wind direction is too small for a reliable analysis.</p>
+
+                <p className='mt-5'><b>Segment</b> gust factors are smoothed based on statistically detected breaks in the gust factor series.</p>
+                <p><b>Raw</b> gust factors are unsmoothed annual average values based on the above equation.</p>
+              </div>
+            </div>
+
             {tableIsOpen ? (
               <div className='min-w-sm max-w-7xl w-4/5 mx-auto mb-7 '>
                 {station && <h3 className='text-2xl! font-bold'>{station.name} ({station.code})</h3>}
